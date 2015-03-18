@@ -1,4 +1,12 @@
-module Grid () where
+module Grid (
+	PlayingGrid,
+	GridIndex,
+	emptyGrid,
+	showGrid,
+	getSquareAt,
+	isSquare,
+	isSquareEmpty
+) where
 
 import Square
 
