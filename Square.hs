@@ -1,4 +1,6 @@
-module Square () where
+module Square (
+	Square(..)
+) where
 
 
 data Square = Empty | P1mark | P2mark
