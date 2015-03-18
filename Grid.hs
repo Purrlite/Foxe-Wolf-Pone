@@ -24,11 +24,15 @@ showLine :: [Square] -> String
 showLine line = foldl connectPoints "" line
 	where connectPoints str point
 			| str == "" = str ++ show point
-			| otherwise = str ++ "|" ++ show point 
+			| otherwise = str ++ "\9474" ++ show point
+-- \9474 is a vertical bar
 
 
 showEmptyLine :: String
-showEmptyLine = replicate 5 '—'
+showEmptyLine = "\9472\9532\9472\9532\9472"
+-- \9472 is horizontal bar
+-- \9532 is something like + but full
+-- so as a result this looks like something like "-+-+-"
 
 
 showGrid :: PlayingGrid -> String
