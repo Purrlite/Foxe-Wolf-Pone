@@ -20,7 +20,7 @@ showLine line = foldl connectPoints "" line
 
 
 showEmptyLine :: String
-showEmptyLine = replicate 5 "—"
+showEmptyLine = replicate 5 '—'
 
 
 showGrid :: PlayingGrid -> String
