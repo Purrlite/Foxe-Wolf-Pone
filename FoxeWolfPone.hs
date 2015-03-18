@@ -1,4 +1,4 @@
-module TicTacToe () where
+module FoxeWolfPone () where
 
 import Square
 import Grid
