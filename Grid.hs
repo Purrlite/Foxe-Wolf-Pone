@@ -42,12 +42,14 @@ showGrid grid = foldl1 connectLines transformedLines
 	      		= line1 ++ "\n" ++ showEmptyLine ++ "\n" ++ line2
 
 
+isIndexValid :: GridIndex -> Bool
+isIndexValid (i1, i2) = (0 <= i1 && i1 < 3) && (0 <= i2 && i2 < 3)
+
+
 getSquareAt :: PlayingGrid -> GridIndex -> Square
-grid `getSquareAt` (index1, index2) 
-	| 0 <= index1 && index1 < 3 && 0 <= index2 && index2 < 3
-			= grid !! index1 !! index2
-	| otherwise
-			= error "Index out of range." 
+grid `getSquareAt` i@(index1, index2)
+	| isIndexValid i = grid !! index1 !! index2
+	| otherwise      = error "Index out of range."
 
 
 isSquare :: PlayingGrid -> GridIndex -> Square -> Bool
