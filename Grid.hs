@@ -4,8 +4,8 @@ module Grid (
 	emptyGrid,
 	showGrid,
 	getSquareAt,
-	isSquare,
-	isSquareEmpty
+	isSquareX,
+	isSquareEmpty,
 ) where
 
 import Square
@@ -52,10 +52,10 @@ grid `getSquareAt` i@(index1, index2)
 	| otherwise      = error "Index out of range."
 
 
-isSquare :: PlayingGrid -> GridIndex -> Square -> Bool
-isSquare grid indexes square = grid `getSquareAt` indexes == square
+isSquareX :: PlayingGrid -> GridIndex -> Square -> Bool
+isSquareX grid indexes value = grid `getSquareAt` indexes == value
 
 
 isSquareEmpty :: PlayingGrid -> GridIndex -> Bool
-isSquareEmpty grid indexes = isSquare grid indexes Empty
+isSquareEmpty grid indexes = isSquareX grid indexes Empty
 
