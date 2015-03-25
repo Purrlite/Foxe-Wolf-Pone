@@ -1,5 +1,6 @@
 module Player (
-	Player(..)
+	Player(..),
+	getPlayerMark
 ) where
 
 
