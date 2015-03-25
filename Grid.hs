@@ -53,9 +53,9 @@ grid `getSquareAt` i@(index1, index2)
 
 
 isSquareX :: PlayingGrid -> GridIndex -> Square -> Bool
-isSquareX grid indexes value = grid `getSquareAt` indexes == value
+isSquareX grid gIndex value = grid `getSquareAt` gIndex == value
 
 
 isSquareEmpty :: PlayingGrid -> GridIndex -> Bool
-isSquareEmpty grid indexes = isSquareX grid indexes Empty
+isSquareEmpty grid gIndex = isSquareX grid gIndex Empty
 
