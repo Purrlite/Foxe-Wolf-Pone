@@ -3,6 +3,8 @@ module Player (
 	getPlayerMark
 ) where
 
+import Square
+
 
 data Player = P1 | P2
 	deriving (Eq, Bounded)
