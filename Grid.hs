@@ -3,6 +3,7 @@ module Grid (
 	GridIndex,
 	emptyGrid,
 	showGrid,
+	printGrid,
 	getSquareAt,
 	isSquareX,
 	isSquareEmpty,
@@ -40,6 +41,10 @@ showGrid grid = foldl1 connectLines transformedLines
 	where transformedLines = map showLine grid
 	      connectLines line1 line2
 	      		= line1 ++ "\n" ++ showEmptyLine ++ "\n" ++ line2
+
+
+printGrid :: PlayingGrid -> IO ()
+printGrid = putStrLn . showGrid
 
 
 isIndexValid :: GridIndex -> Bool
