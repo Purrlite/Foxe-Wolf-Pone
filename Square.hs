@@ -10,5 +10,3 @@ instance Show Square where
 	show Empty  = "-"
 	show P1mark = "X"
 	show P2mark = "O"
-
-
