@@ -7,7 +7,8 @@ module Grid (
 	getSquareAt,
 	isSquareX,
 	isSquareEmpty,
-	setSquare
+	setSquare,
+	isGridFull
 ) where
 
 import Square
@@ -84,3 +85,7 @@ changeSquare grid (i1, i2) sq
 changeSquare' :: [Square] -> Int -> Square -> [Square]
 changeSquare' squares index sq
 	= map (\(x, i) -> if i /= index then x else sq) (zip squares [0..])
+
+
+isGridFull :: PlayingGrid -> Bool
+isGridFull = and . map (all (/= Empty))
