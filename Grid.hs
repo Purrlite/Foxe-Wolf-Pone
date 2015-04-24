@@ -52,7 +52,7 @@ printGrid = putStrLn . showGrid
 
 
 isIndexValid :: GridIndex -> Bool
-isIndexValid (i1, i2) = (0 <= i1 && i1 < 3) && (0 <= i2 && i2 < 3)
+isIndexValid (i1, i2) = (0 <= i1 && i1 <= 2) && (0 <= i2 && i2 <= 2)
 
 
 getSquareAt :: PlayingGrid -> GridIndex -> Square
