@@ -75,10 +75,10 @@ isValidMove = isSquareEmpty
 
 setSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
 setSquare grid gIndex square
-	| square == Empty             = error "Can't empty a square."
-	| not . isIndexValid $ gIndex = error "Index out of range."
-	| not . isValidMove $ gIndex  = error "Trying to access already used square."
-	| otherwise                   = changeSquare grid gIndex square
+	| square == Empty                  = error "Can't empty a square."
+	| not . isIndexValid $ gIndex      = error "Index out of range."
+	| not . isValidMove grid $ gIndex  = error "Trying to access already used square."
+	| otherwise                        = changeSquare grid gIndex square
 
 
 changeSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
