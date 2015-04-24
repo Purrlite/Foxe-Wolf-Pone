@@ -7,6 +7,7 @@ module Grid (
 	getSquareAt,
 	isSquareX,
 	isSquareEmpty,
+	isValidMove,
 	setSquare,
 	isGridFull
 ) where
@@ -68,12 +69,16 @@ isSquareEmpty :: PlayingGrid -> GridIndex -> Bool
 isSquareEmpty grid gIndex = isSquareX grid gIndex Empty
 
 
+isValidMove :: PlayingGrid -> GridIndex -> Bool
+isValidMove = isSquareEmpty
+
+
 setSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
 setSquare grid gIndex square
 	| square == Empty             = error "Can't empty a square."
 	| not . isIndexValid $ gIndex = error "Index out of range."
-	| isSquareEmpty grid gIndex   = changeSquare grid gIndex square
-	| otherwise                   = error "Trying to access already used square."
+	| not . isValidMove $ gIndex  = error "Trying to access already used square."
+	| otherwise                   = changeSquare grid gIndex square
 
 
 changeSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
