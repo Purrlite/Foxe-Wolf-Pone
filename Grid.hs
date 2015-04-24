@@ -57,7 +57,7 @@ isIndexValid (i1, i2) = (0 <= i1 && i1 <= 2) && (0 <= i2 && i2 <= 2)
 
 getSquareAt :: PlayingGrid -> GridIndex -> Square
 grid `getSquareAt` i@(index1, index2)
-	| isIndexValid i = grid !! index1 !! index2
+	| isIndexValid i = grid !! (2 - index2) !! index1
 	| otherwise      = error "Index out of range."
 
 
