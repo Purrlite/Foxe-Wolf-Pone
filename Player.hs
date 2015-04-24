@@ -1,7 +1,7 @@
 module Player (
 	Player(..),
 	getPlayerMark,
-	playerRotation
+	getOtherPlayer
 ) where
 
 import Square
@@ -20,5 +20,6 @@ getPlayerMark P1 = P1mark
 getPlayerMark P2 = P2mark
 
 
-playerRotation :: [Player]
-playerRotation = cycle [P1, P2]
+getOtherPlayer :: Player -> Player
+getOtherPlayer P1 = P2
+getOtherPlayer P2 = P1
