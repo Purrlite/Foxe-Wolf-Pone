@@ -49,8 +49,7 @@ getValidMove player grid = do
 isGameWon :: PlayingGrid -> Bool
 isGameWon grid = isAnyLineWon P1mark grid || isAnyLineWon P2mark grid ||
                  isAnyLineWon P1mark tranGrid || isAnyLineWon P2mark tranGrid ||
-                 isADiagonalWon P1mark grid || isADiagonalWon P2mark grid ||
-                 isADiagonalWon P1mark tranGrid || isADiagonalWon P2mark tranGrid
+                 isADiagonalWon P1mark grid || isADiagonalWon P2mark grid
     where tranGrid = transpose grid
 
 
@@ -59,9 +58,13 @@ isAnyLineWon mark = or . map (all (== mark))
 
 
 isADiagonalWon :: Square -> PlayingGrid -> Bool
-isADiagonalWon mark grid = isSquareX grid (0, 0) mark &&
-                           isSquareX grid (1, 1) mark &&
-                           isSquareX grid (2, 2) mark
+isADiagonalWon mark grid = (isSquareX grid (0, 0) mark &&
+                            isSquareX grid (1, 1) mark &&
+                            isSquareX grid (2, 2) mark)
+                           ||
+                           (isSquareX grid (0, 2) mark &&
+                            isSquareX grid (1, 1) mark &&
+                            isSquareX grid (2, 0) mark)
 
 
 wrapInBlock :: String -> String
