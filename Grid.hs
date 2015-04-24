@@ -16,8 +16,6 @@ import Player
 
 type PlayingGrid = [[Square]]
 
-type FlatGrid = [Square]
-
 type GridIndex = (Int, Int)
 
 
@@ -69,33 +67,6 @@ isSquareEmpty :: PlayingGrid -> GridIndex -> Bool
 isSquareEmpty grid gIndex = isSquareX grid gIndex Empty
 
 
-getFlatIndex :: GridIndex -> Int
-getFlatIndex (i1, i2) = i1 + (2 - i2) * 3
-
-
-flattenGrid :: PlayingGrid -> FlatGrid
-flattenGrid grid = concat grid
-
-
-unflattenGrid :: FlatGrid -> PlayingGrid
-unflattenGrid grid = [firstThree, middleThree, lastThree]
-	where firstThree  = take 3 grid
-	      middleThree = (take 3) . (drop 3) $ grid
-	      lastThree   = drop 6 grid
-
-
-changeSquareInFlatGrid :: [(Square, Int)] -> Int -> Square -> FlatGrid
-changeSquareInFlatGrid flatGrid index square
-	= map (\ (x, i) -> if i == index then square else x) flatGrid
-
-
-changeSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
-changeSquare grid gIndex square
-	= unflattenGrid . changeSquareInFlatGrid indexedFlatGrid flatIndex $ square
-	where indexedFlatGrid = zip (flattenGrid grid) [0..]
-	      flatIndex       = getFlatIndex gIndex
-
-
 setSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
 setSquare grid gIndex square
 	| square == Empty             = error "Can't empty a square."
@@ -103,3 +74,13 @@ setSquare grid gIndex square
 	| isSquareEmpty grid gIndex   = changeSquare grid gIndex square
 	| otherwise                   = error "Trying to access already used square."
 
+
+changeSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
+changeSquare grid (i1, i2) sq
+	= map (\(x, i) -> if i /= index then x else changeSquare' x i1 sq) (zip grid [0..])
+	where index = 2 - i2
+
+
+changeSquare' :: [Square] -> Int -> Square -> [Square]
+changeSquare' squares index sq
+	= map (\(x, i) -> if i /= index then x else sq) (zip squares [0..])
