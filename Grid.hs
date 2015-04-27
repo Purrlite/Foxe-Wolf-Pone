@@ -26,10 +26,7 @@ emptyGrid = replicate 3 (replicate 3 Empty)
 
 
 showLine :: [Square] -> String
-showLine line = foldl connectPoints "" line
-	where connectPoints str point
-			| str == "" = str ++ show point
-			| otherwise = str ++ "\9474" ++ show point
+showLine = foldl1 (\str1 str2 -> str1 ++ "\9474" ++ str2) . map show
 -- \9474 is a vertical bar
 
 
