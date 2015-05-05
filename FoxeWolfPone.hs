@@ -24,27 +24,27 @@ main = do
 
 helpMessage :: String
 helpMessage
- = "This is a game that is a variation on the game TicTacToe.\n" ++
-   "\n" ++
-   "To run this game you need to use one of the following arguments:\n" ++
-   " - 'help'\n" ++
-   " - '--help'      - Displays this help message.\n" ++
-   "\n" ++
-   " - 'tictactoe'\n" ++
-   " - '--tictactoe' - Runs the game with the old TicTacToe characters.\n" ++
-   "\n" ++
-   " - 'animal'\n" ++
-   " - 'animals'\n" ++
-   " - '--animal'\n" ++
-   " - '--animals'   - Runs the game with the new animal characters.\n" ++
-   "                   WARNING: Might crash if your font/terminal doesn't support the characters.\n"
+  = "This is a game that is a variation on the game TicTacToe.\n\
+    \\n\
+    \To run this game you need to use one of the following arguments:\n\
+    \ - 'help'\n\
+    \ - '--help'      - Displays this help message.\n\
+    \\n\
+    \ - 'tictactoe'\n\
+    \ - '--tictactoe' - Runs the game with the old TicTacToe characters.\n\
+    \\n\
+    \ - 'animal'\n\
+    \ - 'animals'\n\
+    \ - '--animal'\n\
+    \ - '--animals'   - Runs the game with the new animal characters.\n\
+    \                   WARNING: Might crash if your font/terminal doesn't support the characters.\n"
 
 
 greetings :: String
-greetings = "Ladies and gentlemen, welcome to the game of century!\n" ++
-            "=====================================================\n" ++
-            "\n" ++
-            "You are here to play 3x3 Foxe Wolf Pone!\n"
+greetings = "Ladies and gentlemen, welcome to the game of century!\n\
+            \=====================================================\n\
+            \\n\
+            \You are here to play 3x3 Foxe Wolf Pone!\n"
 
 
 normalizeArg = stripDashes . map toLower
