@@ -19,8 +19,6 @@ main = do
     let rendering = getRendering arg
 
     putStr greetings
-    putEmptyLine
-    putStrLn "You are here to play 3x3 Foxe Wolf Pone!"
     playGame P1 rendering emptyGrid
 
 
@@ -44,7 +42,9 @@ helpMessage
 
 greetings :: String
 greetings = "Ladies and gentlemen, welcome to the game of century!\n" ++
-           "=====================================================\n"
+            "=====================================================\n" ++
+            "\n" ++
+            "You are here to play 3x3 Foxe Wolf Pone!\n"
 
 
 normalizeArg = stripDashes . map toLower
