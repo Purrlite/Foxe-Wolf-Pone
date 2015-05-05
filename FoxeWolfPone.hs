@@ -48,9 +48,11 @@ greetings = "Ladies and gentlemen, welcome to the game of century!\n\
             \You are here to play 3x3 Foxe Wolf Pone!\n"
 
 
+normalizeArg :: String -> String
 normalizeArg = stripDashes . map toLower
 
 
+stripDashes :: String -> String
 stripDashes str = if str !! 0 == '-' && str !! 1 == '-' then
                   	drop 2 str
                   else
@@ -76,7 +78,7 @@ playGame player rendering grid = do
 getValidMove :: Player -> PlayingGrid -> IO GridIndex
 getValidMove player grid = do
     putStrLn $ (show player) ++ " choose where to place your move (format X Y):"
-    
+
     line <- getLine
     let strs = words line
         index1 = (read (strs !! 0)) :: Int
