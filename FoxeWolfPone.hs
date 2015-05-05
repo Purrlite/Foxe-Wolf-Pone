@@ -10,15 +10,16 @@ import Player
 main = do
     args <- getArgs
     let arg = normalizeArg $ args !! 0
+
     if length args == 0 || arg == "help" then
         putStrLn helpMessage
     else if arg /= "animal" && arg /= "animals" && arg /= "tictactoe" then
         error "Bad/wrong argument passed to FoxeWolfPone."
     else do
 
-    let rendering = getRendering arg
-
     putStr greetings
+
+    let rendering = getRendering arg
     playGame P1 rendering emptyGrid
 
 
@@ -60,8 +61,10 @@ playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
 playGame player rendering grid = do
     putEmptyLine
     printGrid rendering grid
+
     index <- getValidMove player grid
     let newGrid = setSquare grid index (getPlayerMark player)
+
     if isGridFull newGrid then
         sayBye rendering newGrid "The game has ended in a tie!"
     else if isGameWon newGrid then
@@ -73,11 +76,13 @@ playGame player rendering grid = do
 getValidMove :: Player -> PlayingGrid -> IO GridIndex
 getValidMove player grid = do
     putStrLn $ (show player) ++ " choose where to place your move (format X Y):"
+    
     line <- getLine
     let strs = words line
         index1 = (read (strs !! 0)) :: Int
         index2 = (read (strs !! 1)) :: Int
         gIndex = (index1 - 1, index2 - 1)
+
     if isValidMove grid gIndex then
         return gIndex
     else do
