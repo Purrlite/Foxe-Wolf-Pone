@@ -1,4 +1,6 @@
+import Data.Char (toLower)
 import Data.List (transpose)
+import System.Environment (getArgs)
 
 import Square
 import Grid
@@ -6,29 +8,66 @@ import Player
 
 
 main = do
+    args <- getArgs
+    let arg = normalizeArg $ args !! 0
+    if length args == 0 || arg == "help" then
+        putStrLn helpMessage
+    else if arg /= "animal" && arg /= "animals" && arg /= "tictactoe" then
+        error "Bad/wrong argument passed to FoxeWolfPone."
+    else do
+
+    let rendering = getRendering arg
+
     putStr greetings
     putEmptyLine
     putStrLn "You are here to play 3x3 Foxe Wolf Pone!"
-    playGame P1 emptyGrid
+    playGame P1 rendering emptyGrid
+
+
+helpMessage :: String
+helpMessage
+ = "This is a game that is a variation on the game TicTacToe.\n" ++
+   "\n" ++
+   "To run this game you need to use one of the following arguments:\n" ++
+   " - 'help'\n" ++
+   " - '--help'      - Displays this help message.\n" ++
+   "\n" ++
+   " - 'tictactoe'\n" ++
+   " - '--tictactoe' - Runs the game with the old TicTacToe characters.\n" ++
+   "\n" ++
+   " - 'animal'\n" ++
+   " - 'animals'\n" ++
+   " - '--animal'\n" ++
+   " - '--animals'   - Runs the game with the new animal characters.\n" ++
+   "                   WARNING: Might crash if your font/terminal doesn't support the characters.\n"
 
 
 greetings :: String
 greetings = "Ladies and gentlemen, welcome to the game of century!\n" ++
-            "=====================================================\n"
+           "=====================================================\n"
 
 
-playGame :: Player -> PlayingGrid -> IO ()
-playGame player grid = do
+normalizeArg = stripDashes . map toLower
+
+
+stripDashes str = if str !! 0 == '-' && str !! 1 == '-' then
+                  	drop 2 str
+                  else
+                  	str
+
+
+playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
+playGame player rendering grid = do
     putEmptyLine
-    printGrid grid
+    printGrid rendering grid
     index <- getValidMove player grid
     let newGrid = setSquare grid index (getPlayerMark player)
     if isGridFull newGrid then
-        sayBye newGrid "The game has ended in a tie!"
+        sayBye rendering newGrid "The game has ended in a tie!"
     else if isGameWon newGrid then
-        sayBye newGrid $ (show player) ++ " has won the game!"
+        sayBye rendering newGrid $ (show player) ++ " has won the game!"
     else
-        playGame (getOtherPlayer player) newGrid
+        playGame (getOtherPlayer player) rendering newGrid
 
 
 getValidMove :: Player -> PlayingGrid -> IO GridIndex
@@ -73,10 +112,10 @@ wrapInBlock str = replicate (length str + 6) '#' ++ "\n" ++
                  replicate (length str + 6) '#' ++ "\n"
 
 
-sayBye :: PlayingGrid -> String -> IO ()
-sayBye grid str = do
+sayBye :: SquareRendering -> PlayingGrid -> String -> IO ()
+sayBye rendering grid str = do
     putEmptyLine
-    printGrid grid
+    printGrid rendering grid
     putEmptyLine
     putStr $ wrapInBlock str
 
