@@ -107,9 +107,9 @@ isADiagonalWon mark grid = (isSquareX grid (0, 0) mark &&
 
 
 wrapInBlock :: String -> String
-wrapInBlock str = replicate (length str + 6) '#' ++ "\n" ++
-                 "#  " ++ str ++ "  #\n" ++
-                 replicate (length str + 6) '#' ++ "\n"
+wrapInBlock str = unlines [hashfulLine, middleLine, hashfulLine]
+    where hashfulLine = replicate (length str + 6) '#'
+          middleLine  = "#  " ++ str ++ "  #"
 
 
 sayBye :: SquareRendering -> PlayingGrid -> String -> IO ()
