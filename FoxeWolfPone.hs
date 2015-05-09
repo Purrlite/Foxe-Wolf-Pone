@@ -13,7 +13,7 @@ main = do
 
     if length args == 0 || arg == "help" then
         putStrLn helpMessage
-    else if not $ isValidRendering arg then
+    else if not . isValidRendering $ arg then
         error "Bad/wrong argument passed to FoxeWolfPone."
     else do
 
