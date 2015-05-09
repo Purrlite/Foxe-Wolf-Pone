@@ -49,12 +49,8 @@ greetings = "Ladies and gentlemen, welcome to the game of century!\n\
 
 
 normalizeArg :: String -> String
-normalizeArg = stripDashes . map toLower
-
-
-stripDashes :: String -> String
-stripDashes str = case stripPrefix "--" str of Just s  -> s
-                                               Nothing -> str
+normalizeArg str = case (stripPrefix "--") . map toLower $ str of Just s  -> s
+                                                                  Nothing -> str
 
 
 playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
