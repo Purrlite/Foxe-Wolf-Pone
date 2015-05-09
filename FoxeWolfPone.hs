@@ -121,4 +121,4 @@ sayBye rendering grid str = do
 
 
 putEmptyLine :: IO ()
-putEmptyLine = putStr "\n"
+putEmptyLine = putStrLn ""
