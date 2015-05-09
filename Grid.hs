@@ -38,8 +38,7 @@ showEmptyLine = "\9472\9532\9472\9532\9472"
 
 
 showGrid :: SquareRendering -> PlayingGrid -> String
-showGrid rendering grid = unlines . (intersperse showEmptyLine) . transformedLines
-	where transformedLines = map (showLine rendering) grid
+showGrid rendering = unlines . (intersperse showEmptyLine) . map (showLine rendering)
 
 
 printGrid :: SquareRendering -> PlayingGrid -> IO ()
