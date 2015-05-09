@@ -26,7 +26,7 @@ emptyGrid = replicate 3 (replicate 3 Empty)
 
 
 showLine :: SquareRendering -> [Square] -> String
-showLine rendering = foldl1 (\str1 str2 -> str1 ++ "\9474" ++ str2) . map (show' rendering)
+showLine rendering = (intercalate "\9474") . map (show' rendering)
 -- \9474 is a vertical bar
 
 
@@ -38,10 +38,8 @@ showEmptyLine = "\9472\9532\9472\9532\9472"
 
 
 showGrid :: SquareRendering -> PlayingGrid -> String
-showGrid rendering grid = foldl1 connectLines transformedLines
+showGrid rendering grid = unlines . (intersperse showEmptyLine) . transformedLines
 	where transformedLines = map (showLine rendering) grid
-	      connectLines line1 line2
-	      		= line1 ++ "\n" ++ showEmptyLine ++ "\n" ++ line2
 
 
 printGrid :: SquareRendering -> PlayingGrid -> IO ()
