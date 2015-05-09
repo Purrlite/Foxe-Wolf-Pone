@@ -73,9 +73,8 @@ getValidMove :: Player -> PlayingGrid -> IO GridIndex
 getValidMove player grid = do
     putStrLn $ (show player) ++ " choose where to place your move (format X Y):"
 
-    line <- getLine
-    let strs = words line
-        index1 = (read (strs !! 0)) :: Int
+    strs <- fmap words getLine
+    let index1 = (read (strs !! 0)) :: Int
         index2 = (read (strs !! 1)) :: Int
         gIndex = (index1 - 1, index2 - 1)
 
