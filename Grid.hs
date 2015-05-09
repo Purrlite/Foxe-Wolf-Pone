@@ -30,15 +30,15 @@ showLine rendering = (intercalate "\9474") . map (show' rendering)
 -- \9474 is a vertical bar
 
 
-showEmptyLine :: String
-showEmptyLine = "\9472\9532\9472\9532\9472"
+emptyLine :: String
+emptyLine = "\9472\9532\9472\9532\9472"
 -- \9472 is horizontal bar
 -- \9532 is something like + but full
 -- so as a result this looks like something like "-+-+-"
 
 
 showGrid :: SquareRendering -> PlayingGrid -> String
-showGrid rendering = unlines . (intersperse showEmptyLine) . map (showLine rendering)
+showGrid rendering = unlines . (intersperse emptyLine) . map (showLine rendering)
 
 
 printGrid :: SquareRendering -> PlayingGrid -> IO ()
