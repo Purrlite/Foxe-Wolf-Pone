@@ -53,10 +53,8 @@ normalizeArg = stripDashes . map toLower
 
 
 stripDashes :: String -> String
-stripDashes str = if str !! 0 == '-' && str !! 1 == '-' then
-                  	drop 2 str
-                  else
-                  	str
+stripDashes str = case stripPrefix "--" str of Just s  -> s
+                                               Nothing -> str
 
 
 playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
