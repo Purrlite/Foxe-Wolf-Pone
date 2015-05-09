@@ -9,7 +9,7 @@ import Player
 
 main = do
     args <- getArgs
-    let arg = normalizeArg $ args !! 0
+    let arg = normalizeArg . head $ args
 
     if length args == 0 || arg == "help" then
         putStrLn helpMessage
