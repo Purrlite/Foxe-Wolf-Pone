@@ -9,11 +9,11 @@ import Player
 
 main = do
     args <- getArgs
-    let arg = normalizeArg $ args !! 0
+    let arg = normalizeArg . head $ args
 
     if length args == 0 || arg == "help" then
         putStrLn helpMessage
-    else if arg /= "animal" && arg /= "animals" && arg /= "tictactoe" then
+    else if not . isValidRendering $ arg then
         error "Bad/wrong argument passed to FoxeWolfPone."
     else do
 
@@ -49,14 +49,8 @@ greetings = "Ladies and gentlemen, welcome to the game of century!\n\
 
 
 normalizeArg :: String -> String
-normalizeArg = stripDashes . map toLower
-
-
-stripDashes :: String -> String
-stripDashes str = if str !! 0 == '-' && str !! 1 == '-' then
-                  	drop 2 str
-                  else
-                  	str
+normalizeArg str = case (stripPrefix "--") . map toLower $ str of Just s  -> s
+                                                                  Nothing -> str
 
 
 playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
@@ -79,9 +73,8 @@ getValidMove :: Player -> PlayingGrid -> IO GridIndex
 getValidMove player grid = do
     putStrLn $ (show player) ++ " choose where to place your move (format X Y):"
 
-    line <- getLine
-    let strs = words line
-        index1 = (read (strs !! 0)) :: Int
+    strs <- fmap words getLine
+    let index1 = (read (strs !! 0)) :: Int
         index2 = (read (strs !! 1)) :: Int
         gIndex = (index1 - 1, index2 - 1)
 
@@ -114,9 +107,9 @@ isADiagonalWon mark grid = (isSquareX grid (0, 0) mark &&
 
 
 wrapInBlock :: String -> String
-wrapInBlock str = replicate (length str + 6) '#' ++ "\n" ++
-                 "#  " ++ str ++ "  #\n" ++
-                 replicate (length str + 6) '#' ++ "\n"
+wrapInBlock str = unlines [hashfulLine, middleLine, hashfulLine]
+    where hashfulLine = replicate (length str + 6) '#'
+          middleLine  = "#  " ++ str ++ "  #"
 
 
 sayBye :: SquareRendering -> PlayingGrid -> String -> IO ()
@@ -128,4 +121,4 @@ sayBye rendering grid str = do
 
 
 putEmptyLine :: IO ()
-putEmptyLine = putStr "\n"
+putEmptyLine = putStrLn ""

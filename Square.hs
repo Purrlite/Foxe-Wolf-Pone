@@ -2,7 +2,8 @@ module Square (
 	Square(..),
 	SquareRendering(..),
 	show',
-	getRendering
+	getRendering,
+	isValidRendering
 ) where
 
 
@@ -25,4 +26,10 @@ getRendering :: String -> SquareRendering
 getRendering "tictactoe" = TicTacToe
 getRendering "animal"    = Animal
 getRendering "animals"   = Animal
-getRendering arg         = error "Unknown/bad argument passed to FoxeWolfPone."
+
+
+isValidRendering :: String -> Bool
+isValidRendering "tictactoe" = True
+isValidRendering "animal"    = True
+isValidRendering "animals"   = True
+isValidRendering _           = False
