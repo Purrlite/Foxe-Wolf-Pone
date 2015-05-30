@@ -11,10 +11,10 @@ data Square = Empty | P1mark | P2mark
 	deriving (Eq, Bounded)
 
 
-
 data SquareRendering = TicTacToe | Animal
 
 
+show' :: SquareRendering -> Square -> String
 show' _         Empty  = "-"
 show' TicTacToe P1mark = "X"
 show' TicTacToe P2mark = "O"
