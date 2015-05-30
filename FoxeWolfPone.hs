@@ -1,5 +1,5 @@
 import Data.Char (toLower)
-import Data.List (transpose, stripPrefix)
+import Data.List (stripPrefix)
 import System.Environment (getArgs)
 
 import Square
@@ -86,24 +86,22 @@ getValidMove player grid = do
 
 
 isGameWon :: PlayingGrid -> Bool
-isGameWon grid = isAnyLineWon P1mark grid || isAnyLineWon P2mark grid ||
-                 isAnyLineWon P1mark tranGrid || isAnyLineWon P2mark tranGrid ||
-                 isADiagonalWon P1mark grid || isADiagonalWon P2mark grid
-    where tranGrid = transpose grid
-
-
-isAnyLineWon :: Square -> PlayingGrid -> Bool
-isAnyLineWon mark = or . map (all (== mark))
-
-
-isADiagonalWon :: Square -> PlayingGrid -> Bool
-isADiagonalWon mark grid = (isSquareX grid (0, 0) mark &&
-                            isSquareX grid (1, 1) mark &&
-                            isSquareX grid (2, 2) mark)
-                           ||
-                           (isSquareX grid (0, 2) mark &&
-                            isSquareX grid (1, 1) mark &&
-                            isSquareX grid (2, 0) mark)
+isGameWon grid
+    = any (\x -> all (== P1mark) x || all (== P2mark) x) squaresInAllDirs
+    where squaresInAllDirs = map (map (getSquareAt grid)) allDirections
+          allDirections = [
+                -- Rows:
+                [(0,0), (1,0), (2,0)],
+                [(0,1), (1,1), (2,2)],
+                [(0,2), (1,2), (2,2)],
+                -- Columns:
+                [(0,0), (0,1), (0,2)],
+                [(1,0), (1,1), (1,2)],
+                [(2,0), (2,1), (2,2)],
+                -- Diagonals:
+                [(0,0), (1,1), (2,2)],
+                [(0,2), (1,1), (2,0)]
+            ]
 
 
 wrapInBlock :: String -> String
