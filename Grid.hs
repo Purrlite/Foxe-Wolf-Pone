@@ -28,7 +28,7 @@ emptyGrid = replicate 3 (replicate 3 Empty)
 
 
 showLine :: SquareRendering -> [Square] -> String
-showLine rendering = (intercalate "\9474") . map (show' rendering)
+showLine rendering = intercalate "\9474" . map (show' rendering)
 -- \9474 is a vertical bar
 
 
@@ -40,7 +40,7 @@ emptyLine = "\9472\9532\9472\9532\9472"
 
 
 showGrid :: SquareRendering -> PlayingGrid -> String
-showGrid rendering = unlines . (intersperse emptyLine) . map (showLine rendering)
+showGrid rendering = unlines . intersperse emptyLine . map (showLine rendering)
 
 
 printGrid :: SquareRendering -> PlayingGrid -> IO ()

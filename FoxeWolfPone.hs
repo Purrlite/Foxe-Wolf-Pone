@@ -49,8 +49,8 @@ greetings = "Ladies and gentlemen, welcome to the game of century!\n\
 
 
 normalizeArg :: String -> String
-normalizeArg str = case (stripPrefix "--") . map toLower $ str of Just s  -> s
-                                                                  Nothing -> str
+normalizeArg str = case stripPrefix "--" . map toLower $ str of Just s  -> s
+                                                                Nothing -> str
 
 
 playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
@@ -64,24 +64,24 @@ playGame player rendering grid = do
     if isGridFull newGrid then
         sayBye rendering newGrid "The game has ended in a tie!"
     else if isGameWon newGrid then
-        sayBye rendering newGrid $ (show player) ++ " has won the game!"
+        sayBye rendering newGrid $ show player ++ " has won the game!"
     else
         playGame (getOtherPlayer player) rendering newGrid
 
 
 getValidMove :: Player -> PlayingGrid -> IO GridIndex
 getValidMove player grid = do
-    putStrLn $ (show player) ++ " choose where to place your move (format X Y):"
+    putStrLn $ show player ++ " choose where to place your move (format X Y):"
 
     strs <- fmap words getLine
-    let index1 = (read (strs !! 0)) :: Int
-        index2 = (read (strs !! 1)) :: Int
+    let index1 = read (strs !! 0) :: Int
+        index2 = read (strs !! 1) :: Int
         gIndex = (index1 - 1, index2 - 1)
 
     if isValidMove grid gIndex then
         return gIndex
     else do
-        putStrLn $ (show (index1, index2)) ++ " isn't a valid move.\n"
+        putStrLn $ show (index1, index2) ++ " isn't a valid move.\n"
         getValidMove player grid
 
 
