@@ -37,7 +37,7 @@ helpMessage
     \\n\
     \ - 'animal' / 'animals' / '--animal' / '--animals'\n\
     \     - Runs the game with the new animal characters.\n\
-    \       WARNING: Might crash if your font/terminal doesn't support the characters.\n"
+    \     - WARNING: Might crash if your font doesn't support the Unicode animal characters.\n"
 
 
 greetings :: String
