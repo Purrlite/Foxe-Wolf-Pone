@@ -11,7 +11,7 @@ main = do
     args <- getArgs
     let arg = normalizeArg . head $ args
 
-    if length args == 0 || arg == "help" then
+    if null args || arg == "help" then
         putStrLn helpMessage
     else if not . isValidRendering $ arg then
         error "Bad/wrong argument passed to FoxeWolfPone."
