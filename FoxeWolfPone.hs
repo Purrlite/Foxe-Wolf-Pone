@@ -29,17 +29,15 @@ helpMessage
   = "This is a game that is a variation on the game TicTacToe.\n\
     \\n\
     \To run this game you need to use one of the following arguments:\n\
-    \ - 'help'\n\
-    \ - '--help'      - Displays this help message.\n\
+    \ - 'help' / '--help'\n\
+    \     - Displays this help message.\n\
     \\n\
-    \ - 'tictactoe'\n\
-    \ - '--tictactoe' - Runs the game with the old TicTacToe characters.\n\
+    \ - 'tictactoe' / '--tictactoe'\n\
+    \     - Runs the game with the old TicTacToe characters.\n\
     \\n\
-    \ - 'animal'\n\
-    \ - 'animals'\n\
-    \ - '--animal'\n\
-    \ - '--animals'   - Runs the game with the new animal characters.\n\
-    \                   WARNING: Might crash if your font/terminal doesn't support the characters.\n"
+    \ - 'animal' / 'animals' / '--animal' / '--animals'\n\
+    \     - Runs the game with the new animal characters.\n\
+    \       WARNING: Might crash if your font/terminal doesn't support the characters.\n"
 
 
 greetings :: String
