@@ -4,3 +4,6 @@
 # Intermediate formats
 *.hi
 *.o
+
+# Folder created by Cabal
+dist/

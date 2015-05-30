@@ -1,0 +1,16 @@
+name:                Foxe-Wolf-Pone
+version:             0.1.0
+synopsis:            Tic Tac Toe with the option of using animal characters.
+license-file:        LICENSE
+author:              Purlox
+category:            Game
+build-type:          Simple
+cabal-version:       >= 1.8
+
+
+executable FoxeWolfPone
+  main-is:             FoxeWolfPone.hs
+  other-modules:       Player, Grid, Square
+  build-depends:       base >= 4.6 && < 5
+  hs-source-dirs:      src
+  extensions:          DoAndIfThenElse
