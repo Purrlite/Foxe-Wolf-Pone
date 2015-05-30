@@ -89,4 +89,4 @@ changeSquare' squares index sq
 
 
 isGridFull :: PlayingGrid -> Bool
-isGridFull = and . map (all (/= Empty))
+isGridFull = all (notElem Empty)
