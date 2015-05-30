@@ -12,6 +12,8 @@ module Grid (
 	isGridFull
 ) where
 
+import Data.List (intercalate, intersperse)
+
 import Square
 import Player
 
