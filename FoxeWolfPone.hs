@@ -1,3 +1,4 @@
+import Data.Maybe (fromMaybe)
 import Data.Char (toLower)
 import Data.List (stripPrefix)
 import System.Environment (getArgs)
@@ -49,8 +50,7 @@ greetings = "Ladies and gentlemen, welcome to the game of century!\n\
 
 
 normalizeArg :: String -> String
-normalizeArg str = case stripPrefix "--" . map toLower $ str of Just s  -> s
-                                                                Nothing -> str
+normalizeArg str = fromMaybe str (stripPrefix "--" . map toLower $ str)
 
 
 playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
