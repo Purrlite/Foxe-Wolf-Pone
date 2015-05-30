@@ -1,5 +1,5 @@
 import Data.Char (toLower)
-import Data.List (transpose)
+import Data.List (transpose, stripPrefix)
 import System.Environment (getArgs)
 
 import Square
