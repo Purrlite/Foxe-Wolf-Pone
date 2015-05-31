@@ -2,6 +2,7 @@ import Data.Maybe (fromMaybe)
 import Data.Char (toLower)
 import Data.List (stripPrefix)
 import System.Environment (getArgs)
+import System.Exit (exitSuccess)
 
 import Square
 import Grid
@@ -44,7 +45,9 @@ greetings :: String
 greetings = "Ladies and gentlemen, welcome to the game of century!\n\
             \=====================================================\n\
             \\n\
-            \You are here to play 3x3 Foxe Wolf Pone!\n"
+            \You are here to play 3x3 Foxe Wolf Pone!\n\
+            \\n\
+            \REMEMBER! In case you want to exit the game early, then just don't write anything at all after being prompted and press enter!\n"
 
 
 normalizeArg :: String -> String
@@ -72,14 +75,21 @@ getValidMove player grid = do
     putStrLn $ show player ++ " choose where to place your move (format X Y):"
 
     strs <- fmap words getLine
-    let index1 = read (strs !! 0) :: Int
-        index2 = read (strs !! 1) :: Int
-        gIndex = (index1 - 1, index2 - 1)
+
+    if null strs then do
+        putStrLn "Exiting.\n"
+        exitSuccess
+    else if length strs == 1 then do
+        putStrLn "ERROR: You need to write 2 indexes!\n"
+        getValidMove player grid
+    else do
+
+    let gIndex@(i1, i2) = (read (strs !! 0) - 1, read (strs !! 1) - 1)
 
     if isValidMove grid gIndex then
         return gIndex
     else do
-        putStrLn $ show (index1, index2) ++ " isn't a valid move.\n"
+        putStrLn $ show (i1 + 1, i2 + 1) ++ " isn't a valid move.\n"
         getValidMove player grid
 
 
