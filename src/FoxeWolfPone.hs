@@ -90,7 +90,7 @@ getValidMove player grid = do
     if isValidMove grid gIndex then
         return gIndex
     else do
-        putStrLn $ show (i1 + 1, i2 + 1) ++ " isn't a valid move.\n"
+        putStrLn $ "ERROR: " ++ show (i1 + 1, i2 + 1) ++ " isn't a valid move.\n"
         getValidMove player grid
 
 
