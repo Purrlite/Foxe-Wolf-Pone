@@ -19,7 +19,7 @@ main = do
         error "Bad/wrong argument passed to FoxeWolfPone."
     else do
 
-    putStr greetings
+    putStrLn greetings
 
     let rendering = getRendering arg
     playGame P1 rendering emptyGrid
