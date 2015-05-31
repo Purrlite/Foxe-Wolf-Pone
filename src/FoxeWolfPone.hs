@@ -13,8 +13,9 @@ main = do
     args <- getArgs
     let arg = normalizeArg . head $ args
 
-    if null args || arg == "help" then
+    if null args || arg == "help" then do
         putStrLn helpMessage
+        exitSuccess
     else if not . isValidRendering $ arg then
         error "Bad/wrong argument passed to FoxeWolfPone."
     else do
