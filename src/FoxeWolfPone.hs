@@ -93,25 +93,6 @@ getValidMove player grid = do
         getValidMove player grid
 
 
-isGameWon :: PlayingGrid -> Bool
-isGameWon grid
-    = any (\x -> all (== P1mark) x || all (== P2mark) x) squaresInAllDirs
-    where squaresInAllDirs = map (map (getSquareAt grid)) allDirections
-          allDirections = [
-                -- Rows:
-                [(0,0), (1,0), (2,0)],
-                [(0,1), (1,1), (2,1)],
-                [(0,2), (1,2), (2,2)],
-                -- Columns:
-                [(0,0), (0,1), (0,2)],
-                [(1,0), (1,1), (1,2)],
-                [(2,0), (2,1), (2,2)],
-                -- Diagonals:
-                [(0,0), (1,1), (2,2)],
-                [(0,2), (1,1), (2,0)]
-            ]
-
-
 wrapInBlock :: String -> String
 wrapInBlock str = unlines [hashfulLine, middleLine, hashfulLine]
     where hashfulLine = replicate (length str + 6) '#'
