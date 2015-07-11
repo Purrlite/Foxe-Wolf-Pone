@@ -1,6 +1,12 @@
+{-# LANGUAGE  EmptyDataDecls #-}
+
 module Grid (
-	PlayingGrid,
+	Grid(..),
+		InUse,
+		Won,
+		Tied,
 	GridIndex,
+	Either3(..),
 	emptyGrid,
 	showGrid,
 	printGrid,
@@ -10,8 +16,11 @@ module Grid (
 	isValidMove,
 	setSquare,
 	isGridFull,
-	isGridWon
+	isGridWon,
+	finalizeGridIfGameFinished
 ) where
+
+import Prelude hiding (Either(..))
 
 import Data.List (intercalate, intersperse)
 
@@ -19,12 +28,19 @@ import Square
 import Player
 
 
-type PlayingGrid = [[Square]]
+type Grid a = [[Square]]
+
+data InUse
+data Won
+data Tied
 
 type GridIndex = (Int, Int)
 
 
-emptyGrid :: PlayingGrid
+data Either3 a b c = Left a | Middle b | Right c
+
+
+emptyGrid :: Grid a
 emptyGrid = replicate 3 (replicate 3 Empty)
 
 
@@ -40,11 +56,11 @@ emptyLine = "\9472\9532\9472\9532\9472"
 -- so as a result this looks like something like "-+-+-"
 
 
-showGrid :: SquareRendering -> PlayingGrid -> String
+showGrid :: SquareRendering -> Grid a -> String
 showGrid rendering = unlines . intersperse emptyLine . map (showLine rendering)
 
 
-printGrid :: SquareRendering -> PlayingGrid -> IO ()
+printGrid :: SquareRendering -> Grid a -> IO ()
 printGrid rendering = putStrLn . showGrid rendering
 
 
@@ -52,25 +68,25 @@ isIndexValid :: GridIndex -> Bool
 isIndexValid (i1, i2) = (0 <= i1 && i1 <= 2) && (0 <= i2 && i2 <= 2)
 
 
-getSquareAt :: PlayingGrid -> GridIndex -> Square
+getSquareAt :: Grid a -> GridIndex -> Square
 grid `getSquareAt` i@(index1, index2)
 	| isIndexValid i = grid !! (2 - index2) !! index1
 	| otherwise      = error "Index out of range."
 
 
-isSquareX :: PlayingGrid -> GridIndex -> Square -> Bool
+isSquareX :: Grid a -> GridIndex -> Square -> Bool
 isSquareX grid gIndex value = grid `getSquareAt` gIndex == value
 
 
-isSquareEmpty :: PlayingGrid -> GridIndex -> Bool
+isSquareEmpty :: Grid a -> GridIndex -> Bool
 isSquareEmpty grid gIndex = isSquareX grid gIndex Empty
 
 
-isValidMove :: PlayingGrid -> GridIndex -> Bool
+isValidMove :: Grid InUse -> GridIndex -> Bool
 isValidMove grid index = isIndexValid index && isSquareEmpty grid index
 
 
-setSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
+setSquare :: Grid InUse -> GridIndex -> Square -> Grid InUse
 setSquare grid gIndex square
 	| square == Empty                    = error "Can't empty a square."
 	| not . isIndexValid $ gIndex        = error "Index out of range."
@@ -78,7 +94,7 @@ setSquare grid gIndex square
 	| otherwise                          = changeSquare grid gIndex square
 
 
-changeSquare :: PlayingGrid -> GridIndex -> Square -> PlayingGrid
+changeSquare :: Grid InUse -> GridIndex -> Square -> Grid InUse
 changeSquare grid (i1, i2) sq
 	= map (\(x, i) -> if i /= index then x else changeSquare' x i1 sq) (zip grid [0..])
 	where index = 2 - i2
@@ -89,7 +105,7 @@ changeSquare' squares index sq
 	= map (\(x, i) -> if i /= index then x else sq) (zip squares [0..])
 
 
-isGridWon :: PlayingGrid -> Bool
+isGridWon :: Grid InUse -> Bool
 isGridWon grid
     = any (\x -> all (== P1mark) x || all (== P2mark) x) squaresInAllDirs
     where squaresInAllDirs = map (map (getSquareAt grid)) allDirections
@@ -108,5 +124,12 @@ isGridWon grid
             ]
 
 
-isGridFull :: PlayingGrid -> Bool
+isGridFull :: Grid InUse -> Bool
 isGridFull = all (notElem Empty)
+
+
+finalizeGridIfGameFinished :: Grid InUse -> Either3 (Grid InUse) (Grid Tied) (Grid Won)
+finalizeGridIfGameFinished grid
+    | isGridWon grid  = Right grid
+    | isGridFull grid = Middle grid
+    | otherwise       = Left grid

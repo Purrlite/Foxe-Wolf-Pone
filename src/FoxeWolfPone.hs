@@ -1,5 +1,7 @@
 {-# LANGUAGE  DoAndIfThenElse #-}
 
+import Prelude hiding (Either(..))
+
 import Data.Maybe (fromMaybe)
 import Data.Char (toLower)
 import Data.List (stripPrefix)
@@ -56,7 +58,7 @@ normalizeArg :: String -> String
 normalizeArg str = fromMaybe str (stripPrefix "--" . map toLower $ str)
 
 
-playGame :: Player -> SquareRendering -> PlayingGrid -> IO ()
+playGame :: Player -> SquareRendering -> Grid InUse -> IO ()
 playGame player rendering grid = do
     putEmptyLine
     printGrid rendering grid
@@ -64,15 +66,13 @@ playGame player rendering grid = do
     index <- getValidMove player grid
     let newGrid = setSquare grid index (getPlayerMark player)
 
-    if isGridFull newGrid then
-        sayBye rendering newGrid "The game has ended in a tie!"
-    else if isGameWon newGrid then
-        sayBye rendering newGrid $ show player ++ " has won the game!"
-    else
-        playGame (getOtherPlayer player) rendering newGrid
+    case finalizeGridIfGameFinished newGrid of
+        Left unfinishedGrid -> playGame (getOtherPlayer player) rendering unfinishedGrid
+        Middle tiedGrid     -> sayBye rendering tiedGrid "The game has ended in a tie!"
+        Right wonGrid       -> sayBye rendering newGrid $ show player ++ " has won the game!"
 
 
-getValidMove :: Player -> PlayingGrid -> IO GridIndex
+getValidMove :: Player -> Grid InUse -> IO GridIndex
 getValidMove player grid = do
     putStrLn $ show player ++ " choose where to place your move (format X Y):"
 
@@ -101,7 +101,7 @@ wrapInBlock str = unlines [hashfulLine, middleLine, hashfulLine]
           middleLine  = "#  " ++ str ++ "  #"
 
 
-sayBye :: SquareRendering -> PlayingGrid -> String -> IO ()
+sayBye :: SquareRendering -> Grid a -> String -> IO ()
 sayBye rendering grid str = do
     putEmptyLine
     printGrid rendering grid
