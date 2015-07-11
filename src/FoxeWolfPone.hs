@@ -27,19 +27,18 @@ main = do
 
 
 helpMessage :: String
-helpMessage
-  = "This is a game that is a variation on the game TicTacToe.\n\
-    \\n\
-    \To run this game you need to use one of the following arguments:\n\
-    \ - 'help' / '--help'\n\
-    \     - Displays this help message.\n\
-    \\n\
-    \ - 'tictactoe' / '--tictactoe'\n\
-    \     - Runs the game with the old TicTacToe characters.\n\
-    \\n\
-    \ - 'animal' / 'animals' / '--animal' / '--animals'\n\
-    \     - Runs the game with the new animal characters.\n\
-    \     - WARNING: Might crash if your font doesn't support the Unicode animal characters.\n"
+helpMessage = "This is a game that is a variation on the game TicTacToe.\n\
+              \\n\
+              \To run this game you need to use one of the following arguments:\n\
+              \ - 'help' / '--help'\n\
+              \     - Displays this help message.\n\
+              \\n\
+              \ - 'tictactoe' / '--tictactoe'\n\
+              \     - Runs the game with the old TicTacToe characters.\n\
+              \\n\
+              \ - 'animal' / 'animals' / '--animal' / '--animals'\n\
+              \     - Runs the game with the new animal characters.\n\
+              \     - WARNING: Might crash if your font doesn't support the Unicode animal characters.\n"
 
 
 greetings :: String
