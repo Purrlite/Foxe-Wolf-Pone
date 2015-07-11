@@ -1,3 +1,5 @@
+{-# LANGUAGE  DoAndIfThenElse #-}
+
 import Data.Maybe (fromMaybe)
 import Data.Char (toLower)
 import Data.List (stripPrefix)
