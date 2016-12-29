@@ -1,4 +1,4 @@
-Foxe Wolf Pone [![Build Status](https://travis-ci.org/Purlox/Foxe-Wolf-Pone.svg?branch=master)](https://travis-ci.org/Purlox/Foxe-Wolf-Pone)
+Foxe Wolf Pone [![Build Status](https://travis-ci.org/Purrlite/Foxe-Wolf-Pone.svg?branch=master)](https://travis-ci.org/Purrlite/Foxe-Wolf-Pone)
 ==============
 
 It's basically Tic Tac Toe made in Haskell, with the option to render it using animal characters from Unicode.
